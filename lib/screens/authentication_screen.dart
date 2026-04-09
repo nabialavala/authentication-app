@@ -40,6 +40,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       );
 
       debugPrint('REGISTER SUCCESS');
+      _emailController.clear();
+      _passwordController.clear();
 
       if (!mounted) return;
       Navigator.pushReplacement(
@@ -80,8 +82,15 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       );
 
       debugPrint('SIGN IN SUCCESS');
+      _emailController.clear();
+      _passwordController.clear();
 
       if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Sign in successful')),
+      );
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (_) => const ProfileScreen()),
@@ -91,7 +100,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign in failed: ${e.code}')),
+        SnackBar(content: Text('Sign in failed: ${e.message ?? e.code}')),
       );
     } catch (e) {
       debugPrint('SIGN IN OTHER ERROR: $e');
