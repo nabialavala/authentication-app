@@ -42,18 +42,19 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       debugPrint('REGISTER SUCCESS');
 
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Registration successful')),
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const ProfileScreen()),
       );
     } on FirebaseAuthException catch (e) {
-      debugPrint('REGISTER FIREBASE ERROR: ${e.code} | ${e.message}');
+      debugPrint('FIREBASE ERROR: ${e.code} | ${e.message}');
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Register failed: ${e.message ?? e.code}')),
       );
     } catch (e) {
-      debugPrint('REGISTER OTHER ERROR: $e');
+      debugPrint('OTHER ERROR: $e');
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -66,7 +67,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     debugPrint('SIGN IN BUTTON PRESSED');
 
     if (!_formKey.currentState!.validate()) {
-      debugPrint('SIGN IN BLOCKED BY VALIDATION');
+      debugPrint('SIGN IN BLOCKED');
       return;
     }
 
@@ -86,7 +87,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         MaterialPageRoute(builder: (_) => const ProfileScreen()),
       );
     } on FirebaseAuthException catch (e) {
-      debugPrint('SIGN IN FIREBASE ERROR: ${e.code} | ${e.message}');
+      debugPrint('SIGN IN ERROR: ${e.code} | ${e.message}');
 
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
